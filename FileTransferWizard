@@ -1,0 +1,20 @@
+# Define source and destination paths
+$sourceFile = "C:\user\downloads\origin.txt"
+$tempDestinationFile = "C:\user\uploads\origin.txt"
+$finalDestinationFile = "C:\user\uploads\ending.txt"
+
+# Check if the source file exists
+if (Test-Path $sourceFile) {
+    # Copy the file to the destination folder with a temporary name
+    Copy-Item -Path $sourceFile -Destination $tempDestinationFile -Force
+    
+    # Rename the file to ending.txt
+    Rename-Item -Path $tempDestinationFile -NewName (Split-Path -Path $finalDestinationFile -Leaf) -Force
+    
+    # Remove the original file from the source folder
+    Remove-Item -Path $sourceFile -Force
+    
+    Write-Host "File copied, renamed, and original deleted successfully."
+} else {
+    Write-Host "The file does not exist at the source path."
+}
